@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>A Construtora - Material de Construção</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f9fafb;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      color: #b71c1c; /* vermelho escuro */
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #7f0000; /* vermelho mais escuro */
+    }
+
+    /* Header */
+    header {
+      background-color: #7f0000; /* vermelho escuro */
+      color: white;
+      padding: 15px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+    .logo h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+    nav ul li {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    nav ul li a {
+      color: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      background-color: #b71c1c; /* vermelho */
+      color: #fce4ec; /* rosa claro */
+    }
+
+    /* Main */
+    main {
+      flex-grow: 1;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .intro {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .intro h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      color: #7f0000; /* vermelho escuro */
+      margin-bottom: 10px;
+    }
+    .intro p {
+      font-size: 1.1rem;
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Produtos */
+    .produtos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .produto-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .produto-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+    .produto-img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      background-color: #f0f0f0;
+      padding: 20px;
+    }
+    .produto-info {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .produto-info h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      color: #7f0000; /* vermelho escuro */
+      margin-bottom: 10px;
+    }
+    .produto-info p {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #b71c1c; /* vermelho */
+      margin-bottom: 15px;
+    }
+    .btn-comprar {
+      background-color: #b71c1c; /* vermelho */
+      color: white;
+      border: none;
+      padding: 12px 0;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-align: center;
+      user-select: none;
+    }
+    .btn-comprar:hover {
+      background-color: #7f0000; /* vermelho escuro */
+    }
+
+    /* Footer */
+    footer {
+      background-color: #7f0000; /* vermelho escuro */
+      color: #f8bbd0; /* rosa claro */
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 60px;
+    }
+    footer .social-icons {
+      margin: 15px 0 10px;
+    }
+    footer .social-icons a {
+      color: #f48fb1; /* rosa médio */
+      margin: 0 12px;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    footer .social-icons a:hover {
+      color: #fce4ec; /* rosa claro */
+    }
+
+    /* Responsividade */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px 20px;
+      }
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+      .produto-img {
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="https://i.imgur.com/6Xq6Q0M.png" alt="Logo A Construtora" />
+      <h1>A Construtora</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" class="active">Início</a></li>
+        <li><a href="#produtos">Produtos</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h2>Seu parceiro em material de construção em Barretos</h2>
+      <p>Oferecemos os melhores produtos para sua obra com qualidade, preço justo e atendimento especializado.</p>
+    </section>
+
+    <section id="produtos" class="produtos-grid">
+      <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345123_1234567890_n.jpg" alt="Cimento CP II" />
+        <div class="produto-info">
+          <h3>Cimento CP II</h3>
+          <p>R$ 28,00</p>
+          <button class="btn-comprar" aria-label="Comprar Cimento CP II">Comprar</button>
+        </div>
+      </article>
+
+      <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345124_1234567891_n.jpg" alt="Areia Lavada" />
+        <div class="produto-info">
+          <h3>Areia Lavada (m³)</h3>
+          <p>R$ 90,00</p>
+          <button class="btn-comprar" aria-label="Comprar Areia Lavada">Comprar</button>
+        </div>
+      </article>
+       <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345124_1234567891_n.jpg" alt="Areia Lavada" />
+        <div class="produto-info">
+          <h3>Dusha Advanced Lorenzetti </h3>
+          <p>R$ 90,00</p>
+          <button class="btn-comprar" aria-label="Comprar Dusha Advanced Lorenzetti">Comprar</button>
+        </div>
+      </article>
+       <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345124_1234567891_n.jpg" alt="Areia Lavada" />
+        <div class="produto-info">
+          <h3>Massa Corrida Mococa </h3>
+          <p>R$ 90,00</p>
+          <button class="btn-comprar" aria-label="Comprar Massa Corrida Mococa">Comprar</button>
+        </div>
+      </article>
+       <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345124_1234567891_n.jpg" alt="Areia Lavada" />
+        <div class="produto-info">
+          <h3>Torneira C65 </h3>
+          <p>R$ 90,00</p>
+          <button class="btn-comprar" aria-label="Comprar Torneira C65">Comprar</button>
+        </div>
+      </article>
+       <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345124_1234567891_n.jpg" alt="Areia Lavada" />
+        <div class="produto-info">
+          <h3>Caixa d'agua Aqualimp 500Litros </h3>
+          <p>R$ 90,00</p>
+          <button class="btn-comprar" aria-label="Comprar Caixa d'agua Aqualimp 500Litros">Comprar</button>
+        </div>
+      </article>
+       <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345124_1234567891_n.jpg" alt="Areia Lavada" />
+        <div class="produto-info">
+          <h3>Kit para Banheiro 5 peças </h3>
+          <p>R$ 90,00</p>
+          <button class="btn-comprar" aria-label="Comprar Kit para Banheiro 5 peças">Comprar</button>
+        </div>
+      </article>
+       <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345124_1234567891_n.jpg" alt="Areia Lavada" />
+        <div class="produto-info">
+          <h3>Assento Almofadado </h3>
+          <p>R$ 90,00</p>
+          <button class="btn-comprar" aria-label="Comprar Assento Almofadado">Comprar</button>
+        </div>
+      </article>
+       <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345124_1234567891_n.jpg" alt="Areia Lavada" />
+        <div class="produto-info">
+          <h3>Torneira Gali bica alta </h3>
+          <p>R$ 90,00</p>
+          <button class="btn-comprar" aria-label="Comprar Torneira Gali bica alta">Comprar</button>
+        </div>
+      </article>
+       <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345124_1234567891_n.jpg" alt="Areia Lavada" />
+        <div class="produto-info">
+          <h3>Aditivo ipermiabilizante 18Litros </h3>
+          <p>R$ 90,00</p>
+          <button class="btn-comprar" aria-label="Comprar Aditivo ipermiabilizante 18Litros">Comprar</button>
+        </div>
+      </article>
+       <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345124_1234567891_n.jpg" alt="Areia Lavada" />
+        <div class="produto-info">
+          <h3>Valvula de Escape </h3>
+          <p>R$ 90,00</p>
+          <button class="btn-comprar" aria-label="Comprar Valvula de escape">Comprar</button>
+        </div>
+      </article>
+
+      <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345125_1234567892_n.jpg" alt="Bloco de Concreto" />
+        <div class="produto-info">
+          <h3>Bloco de Concreto</h3>
+          <p>R$ 2,50</p>
+          <button class="btn-comprar" aria-label="Comprar Bloco de Concreto">Comprar</button>
+        </div>
+      </article>
+
+      <article class="produto-card">
+        <img class="produto-img" src="https://instagram.fgru3-1.fna.fbcdn.net/v/t51.2885-15/295345126_1234567893_n.jpg" alt="Tijolo Baiano" />
+        <div class="produto-info">
+          <h3>Tijolo Baiano</h3>
+          <p>R$ 0,80</p>
+          <button class="btn-comprar" aria-label="Comprar Tijolo Baiano">Comprar</button>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer id="contato">
+    <p>Contato: <a href="tel:+5517999999999">(17) 99999-9999</a> | Endereço: Rua Exemplo, 123 - Barretos, SP</p>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/aconstrutora.barretos" target="_blank" aria-label="Instagram A Construtora"><i class="fab fa-instagram"></i></a>
+      <a href="https://wa.me/5517999999999" target="_blank" aria-label="WhatsApp A Construtora"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    <p>© 2024 A Construtora. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
