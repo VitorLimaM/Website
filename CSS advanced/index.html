@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitorPro - Aumente Sua Produtividade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { transform: scale(1.1); }
+            70% { transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .animate-fadeInUp { animation: fadeInUp 0.8s ease-out; }
+        .animate-bounceIn { animation: bounceIn 1s ease-out; }
+        .animate-pulse { animation: pulse 2s infinite; }
+        .hero-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+        .btn-ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-ripple::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transition: 0.6s;
+            transform: translate(-50%, -50%);
+        }
+        .btn-ripple:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .testimonials {
+            background: url('https://placehold.co/1920x1080/e3f2fd/000000.png') no-repeat center center;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Header -->
+    <header class="hero-bg text-white py-20 parallax">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-fadeInUp">VitorPro</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto animate-fadeInUp" style="animation-delay: 0.2s;">Aumente sua produtividade com nosso app inteligente de gerenciamento de tarefas e hábitos.</p>
+            <button class="btn-ripple bg-yellow-400 hover:bg-yellow-500 text-blue-900 px-8 py-4 rounded-full text-xl font-semibold transition-all duration-300 animate-bounceIn" style="animation-delay: 0.4s;">
+                Comece Agora Gratuitamente
+            </button>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Funcionalidades Incríveis</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="feature-card bg-gradient-to-br from-blue-400 to-blue-600 p-8 rounded-lg text-center text-white">
+                    <div class="text-6xl mb-6 animate-pulse">📋</div>
+                    <h3 class="text-2xl font-semibold mb-4">Gerenciamento de Tarefas</h3>
+                    <p>Organize suas tarefas com listas inteligentes e lembretes automatizados.</p>
+                </div>
+                <div class="feature-card bg-gradient-to-br from-green-400 to-green-600 p-8 rounded-lg text-center text-white">
+                    <div class="text-6xl mb-6 animate-pulse">📊</div>
+                    <h3 class="text-2xl font-semibold mb-4">Relatórios Detalhados</h3>
+                    <p>Acompanhe seu progresso com gráficos interativos e insights personalizados.</p>
+                </div>
+                <div class="feature-card bg-gradient-to-br from-purple-400 to-purple-600 p-8 rounded-lg text-center text-white">
+                    <div class="text-6xl mb-6 animate-pulse">⏰</div>
+                    <h3 class="text-2xl font-semibold mb-4">Técnicas de Pomodoro</h3>
+                    <p>Melhore seu foco com sessões de trabalho e pausas otimizadas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase Section -->
+    <section class="py-20 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                    <h2 class="text-4xl font-bold mb-6 text-gray-800">Interface Intuitiva e Moderna</h2>
+                    <p class="text-lg mb-6 text-gray-600">Uma experiência de usuário fluida com design responsivo que se adapta a qualquer dispositivo. Animações suaves e transições elegantes fazem toda a diferença.</p>
+                    <ul class="text-gray-600 mb-6">
+                        <li class="flex items-center mb-2">✅ Design totalmente responsivo</li>
+                        <li class="flex items-center mb-2">✅ Animações CSS avançadas</li>
+                        <li class="flex items-center mb-2">✅ Tema escuro/claro</li>
+                    </ul>
+                    <button class="btn-ripple bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300">
+                        Saiba Mais
+                    </button>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="bg-white rounded-lg shadow-lg p-8 transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/760143c2-ffcc-4506-a48e-c489d4d58af2.png" alt="Captura de tela do app VitorPro mostrando interface moderna com listas de tarefas, gráficos e botões para adicionar novas tarefas, em um fundo esverdeado com ícones coloridos de produtividade" class="w-full rounded">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 testimonials text-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">O que Nossos Usuários Dizem</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg p-8 rounded-lg animate-fadeInUp">
+                    <p class="text-lg mb-4">"O VitorPro mudou minha rotina completamente. Consigo ser muito mais eficiente!"</p>
+                    <div class="flex items-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/20a013ef-a990-445b-9c7f-ea7134ebcc72.png" alt="Foto de perfil de mulher sorridente com cabelos escuros, usando óculos e blusa azul, representando uma usuária satisfeita do app" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <p class="font-semibold">Maria Silva</p>
+                            <p class="text-sm">Designer Gráfica</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg p-8 rounded-lg animate-fadeInUp" style="animation-delay: 0.2s;">
+                    <p class="text-lg mb-4">"Interface incrível e funcionalidades que realmente ajudam no dia a dia."</p>
+                    <div class="flex items-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b888a027-2547-46d4-b208-3eebc504978d.png" alt="Foto de perfil de homem jovem com barba, sorriso amigável, usando camisa xadrez e fundo de escritório moderno" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <p class="font-semibold">João Santos</p>
+                            <p class="text-sm">Desenvolvedor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-center parallax">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-6 animate-fadeInUp">Pronto para Ser Mais Produtivo?</h2>
+            <p class="text-xl mb-8 animate-fadeInUp" style="animation-delay: 0.2s;">Junte-se a milhares de usuários satisfeitos. Comece sua jornada hoje!</p>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 animate-fadeInUp" style="animation-delay: 0.4s;">
+                <button class="btn-ripple bg-white text-purple-600 px-8 py-4 rounded-full text-xl font-semibold hover:bg-gray-100 transition-all duration-300">
+                    Baixar Agora
+                </button>
+                <span class="text-lg">OU</span>
+                <input type="email" placeholder="Seu e-mail" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-white">
+                <button class="btn-ripple bg-yellow-400 text-blue-900 px-6 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition-all duration-300">
+                    Receber Novidades
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>© 2023 VitorPro. Todos os direitos reservados. Design avançado com CSS puro e Tailwind.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll e outras interações simples
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animație on scroll
+        function handleScroll() {
+            const elements = document.querySelectorAll('.animate-fadeInUp, .animate-bounceIn');
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    el.classList.remove('animate-fadeInUp', 'animate-bounceIn');
+                    setTimeout(() => el.classList.add('animate-fadeInUp'), 0);
+                }
+            });
+        }
+        window.addEventListener('scroll', handleScroll);
+    </script>
+</body>
+</html>
+</content>
+</create_file>

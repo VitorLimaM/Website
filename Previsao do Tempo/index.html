@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard do Clima - Climate Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .weather-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .weather-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-blue-400 to-blue-600 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-white mb-2">Dashboard do Clima</h1>
+            <p class="text-blue-100">Previsão em tempo real para sua cidade</p>
+        </header>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-semibold mb-4">Buscar Clima por Cidade</h2>
+            <div class="flex mb-4">
+                <input type="text" id="city-input" placeholder="Digite o nome da cidade (ex: Vancouver)" class="flex-grow px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="search-btn" class="px-6 py-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 transition-colors">Buscar</button>
+            </div>
+            <div id="loading" class="hidden text-center">
+                <span class="loading inline-block">Carregando...</span>
+            </div>
+            <div id="error" class="hidden text-red-500 text-center"></div>
+        </div>
+
+        <div id="weather-display" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+            <div class="weather-card bg-white rounded-lg shadow p-6">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Condições Atuais</h3>
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <p class="text-3xl font-bold text-blue-600" id="temperature">--°C</p>
+                        <p class="text-gray-600" id="description">--</p>
+                    </div>
+                    <img id="weather-icon" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4317b70b-4c6f-4d4a-a497-55d0d1e299fb.png" alt="Ícone do tempo - representação visual das condições climáticas atuais, como sol, nuvem ou chuva" class="w-20 h-20">
+                </div>
+                <p class="text-gray-500" id="city-name">Cidade</p>
+            </div>
+
+            <div class="weather-card bg-white rounded-lg shadow p-6">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Detalhes</h3>
+                <p><strong>Umidade:</strong> <span id="humidity">--%</span></p>
+                <p><strong>Vento:</strong> <span id="wind-speed">-- km/h</span></p>
+                <p><strong>Sensação:</strong> <span id="feels-like">--°C</span></p>
+                <p><strong>Visibilidade:</strong> <span id="visibility">-- km</span></p>
+            </div>
+
+            <div class="weather-card bg-white rounded-lg shadow p-6">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Previsão de Hoje</h3>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span>Manhã</span>
+                        <span class="font-semibold" id="morning-temp">--°C</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Tarde</span>
+                        <span class="font-semibold" id="afternoon-temp">--°C</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Noite</span>
+                        <span class="font-semibold" id="evening-temp">--°C</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const apiUrlTemplate = 'https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,visibility&timezone=auto';
+        const geocodingUrl = 'https://api.bigdatacloud.net/data/reverse-geocode-client';
+
+        async function getWeather(lat, lon) {
+            const url = apiUrlTemplate.replace('{lat}', lat).replace('{lon}', lon);
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Erro na API');
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        async function getCoordinates(city) {
+            // Simulação simples - em produção, use uma API de geocoding
+            const coordinates = {
+                'vancouver': [-23.5505, -46.6333],
+                'rio de janeiro': [-22.9068, -43.1729],
+                'brasília': [-15.7942, -47.8822],
+                'vancouver': [-23.5505, -46.6333],
+                'new york': [40.7128, -74.0060],
+                'london': [51.5074, -0.1278]
+            };
+            return coordinates[city.toLowerCase()] || null;
+        }
+
+        async function displayWeather(city) {
+            const coords = await getCoordinates(city);
+            if (!coords) {
+                throw new Error('Cidade não encontrada');
+            }
+            const data = await getWeather(coords[0], coords[1]);
+            const current = data.current_weather;
+            const hourly = data.hourly;
+
+            // Atualizar elementos
+            document.getElementById('city-name').innerText = city;
+            document.getElementById('temperature').innerText = Math.round(current.temperature) + '°C';
+            document.getElementById('description').innerText = getWeatherDescription(current.weathercode);
+            document.getElementById('feels-like').innerText = Math.round(current.apparent_temperature || current.temperature) + '°C';
+            document.getElementById('humidity').innerText = Math.round(hourly.relative_humidity_2m[0]) + '%';
+            document.getElementById('wind-speed').innerText = Math.round(hourly.wind_speed_10m[0]) + ' km/h';
+            document.getElementById('visibility').innerText = Math.round(hourly.visibility[0] / 1000) + ' km';
+
+            // Previsão simplificada
+            document.getElementById('morning-temp').innerText = Math.round(hourly.temperature_2m[6]) + '°C'; // 6 AM
+            document.getElementById('afternoon-temp').innerText = Math.round(hourly.temperature_2m[12]) + '°C'; // 12 PM
+            document.getElementById('evening-temp').innerText = Math.round(hourly.temperature_2m[18]) + '°C'; // 6 PM
+
+            // Ícone (usando codes WMO)
+            document.getElementById('weather-icon').src = getWeatherIcon(current.weathercode);
+        }
+
+        function getWeatherDescription(code) {
+            const descriptions = {
+                0: 'Céu Limpo', 1: 'Principalmente Limpo', 2: 'Parcialmente Nublado',
+                3: 'Nublado', 45: 'Névoa', 48: 'Névoa Congelante',
+                51: 'Garoa Leve', 53: 'Garoa Moderada', 55: 'Garoa Forte',
+                61: 'Chuva Leve', 63: 'Chuva Moderada', 65: 'Chuva Forte',
+                71: 'Neve Leve', 73: 'Neve Moderada', 75: 'Neve Forte'
+            };
+            return descriptions[code] || 'Desconhecido';
+        }
+
+        function getWeatherIcon(code) {
+            // Retorna ícone baseado no código WMO
+            return `https://openweathermap.org/img/w/${code}.png`; // Usando OpenWeather icons por simplicidade
+        }
+
+        document.getElementById('search-btn').addEventListener('click', async () => {
+            const city = document.getElementById('city-input').value.trim();
+            if (!city) {
+                document.getElementById('error').innerText = 'Digite uma cidade';
+                document.getElementById('error').classList.remove('hidden');
+                return;
+            }
+
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('error').classList.add('hidden');
+            document.getElementById('weather-display').classList.add('hidden');
+
+            try {
+                await displayWeather(city);
+                document.getElementById('weather-display').classList.remove('hidden');
+            } catch (error) {
+                document.getElementById('error').innerText = error.message;
+                document.getElementById('error').classList.remove('hidden');
+            } finally {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        });
+
+        // Load default city 
+        window.addEventListener('load', () => {
+            displayWeather('vancouver').then(() => {
+                document.getElementById('weather-display').classList.remove('hidden');
+            }).catch(console.error);
+        });
+    </script>
+</body>
+</html>
+</content>
+</create_file>
+

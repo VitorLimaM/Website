@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Velha - Tic-Tac-Toe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .cell {
+            width: 100px;
+            height: 100px;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: 2px solid #ddd;
+        }
+        .cell:hover {
+            background-color: #f0f0f0;
+        }
+        .winning-cell {
+            background-color: #4CAF50 !important;
+            color: white;
+        }
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 5px;
+        }
+        .status {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        @media (max-width: 768px) {
+            .game-board {
+                grid-template-columns: repeat(3, 80px);
+            }
+            .cell {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex flex-col items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4">
+        <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Jogo da Velha</h1>
+        <div class="game-board" id="board">
+            <div class="cell" id="c0"></div>
+            <div class="cell" id="c1"></div>
+            <div class="cell" id="c2"></div>
+            <div class="cell" id="c3"></div>
+            <div class="cell" id="c4"></div>
+            <div class="cell" id="c5"></div>
+            <div class="cell" id="c6"></div>
+            <div class="cell" id="c7"></div>
+            <div class="cell" id="c8"></div>
+        </div>
+        <div class="status text-center mt-4" id="status">Vez do Jogador X</div>
+        <button id="reset-btn" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded w-full transition-colors">Reiniciar Jogo</button>
+    </div>
+
+    <script>
+        const board = Array(9).fill(null);
+        let currentPlayer = 'X';
+        let gameActive = true;
+        const statusEl = document.getElementById('status');
+        const resetBtn = document.getElementById('reset-btn');
+
+        const cells = [];
+        for (let i = 0; i < 9; i++) {
+            cells[i] = document.getElementById(`c${i}`);
+            cells[i].addEventListener('click', () => makeMove(i));
+        }
+
+        resetBtn.addEventListener('click', resetGame);
+
+        function makeMove(index) {
+            if (board[index] || !gameActive) return;
+
+            board[index] = currentPlayer;
+            cells[index].innerText = currentPlayer;
+
+            if (checkWinner(currentPlayer)) {
+                highlightWinner(currentPlayer);
+                alert(`Jogador ${currentPlayer} venceu!`);
+                gameActive = false;
+                statusEl.innerText = `Jogador ${currentPlayer} venceu!`;
+                return;
+            }
+
+            if (board.every(cell => cell)) {
+                alert('Empate!');
+                statusEl.innerText = 'Empate!';
+                gameActive = false;
+                return;
+            }
+
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            statusEl.innerText = `Vez do Jogador ${currentPlayer}`;
+        }
+
+        function checkWinner(player) {
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+                [0, 4, 8], [2, 4, 6] // diagonals
+            ];
+
+            return winPatterns.some(pattern => pattern.every(index => board[index] === player));
+        }
+
+        function highlightWinner(player) {
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+
+            const winningPattern = winPatterns.find(pattern => pattern.every(index => board[index] === player));
+            if (winningPattern) {
+                winningPattern.forEach(index => {
+                    cells[index].classList.add('winning-cell');
+                });
+            }
+        }
+
+        function resetGame() {
+            board.fill(null);
+            cells.forEach(cell => {
+                cell.innerText = '';
+                cell.classList.remove('winning-cell');
+            });
+            currentPlayer = 'X';
+            gameActive = true;
+            statusEl.innerText = 'Vez do Jogador X';
+        }
+    </script>
+</body>
+</html>
+</content>
+</create_file>

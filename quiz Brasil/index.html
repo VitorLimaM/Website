@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Sobre o Brasil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .question-card {
+            transition: all 0.3s ease;
+        }
+        .correct {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        body {
+            background: linear-gradient(135deg, #009688 0%, #4caf50 100%);
+        }
+        .btn-option {
+            transition: all 0.2s ease;
+        }
+        .btn-option:hover {
+            transform: translateY(-2px);
+        }
+        .score-display {
+            font-size: 3rem;
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="bg-green-400 min-h-screen flex flex-col items-center justify-center py-8">
+    <header class="text-center mb-8">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">🌍 Quiz Sobre o Brasil</h1>
+        <p class="text-lg text-green-100 max-w-2xl mx-auto">Teste seus conhecimentos sobre o país verde-amarelo! 10 perguntas para você acertar o máximo possível.</p>
+    </header>
+
+    <main class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4 question-card p-8" id="quiz-container">
+        <div id="start-screen">
+            <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">Pronto para começar?</h2>
+            <p class="text-center mb-6 text-gray-600">Você terá 10 perguntas múltipla escolha. Cada acerto vale 1 ponto.</p>
+            <button id="start-btn" class="btn-option bg-green-500 hover:bg-green-600 text-white w-full py-4 rounded-lg font-semibold">Iniciar Quiz</button>
+        </div>
+
+        <div id="question-screen" class="hidden">
+            <div class="flex justify-between mb-6">
+                <span class="text-sm font-semibold text-gray-600" id="question-counter">Pergunta 1 de 10</span>
+                <span class="text-sm font-semibold text-blue-600" id="current-score">Pontuação: 0</span>
+            </div>
+            <h3 class="text-2xl font-bold mb-6 text-gray-800" id="question-text">Pergunta?</h3>
+            <div class="space-y-3" id="options-container">
+                <!-- Options will be inserted here -->
+            </div>
+            <div id="feedback" class="hidden mt-6 p-4 rounded-lg">
+                <!-- Feedback will be inserted here -->
+            </div>
+        </div>
+
+        <div id="final-screen" class="hidden text-center">
+            <h2 class="text-4xl font-bold mb-4 text-gray-800">Quiz Concluído!</h2>
+            <div id="final-score" class="score-display mb-6"></div>
+            <p class="text-lg text-gray-600 mb-6" id="final-message"></p>
+            <button id="restart-btn" class="btn-option bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold">Fazer Novamente</button>
+        </div>
+    </main>
+
+    <footer class="text-center mt-8 text-green-100">
+        <p>Feito Por Vitor the smart guy.</p>
+    </footer>
+
+    <script>
+        // Quiz data
+        const quizData = [
+            {
+                question: "Qual é a capital do Brasil?",
+                options: ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"],
+                correct: 2,
+                explanation: "Brasília é a capital federal do Brasil desde 1960."
+            },
+            {
+                question: "Qual é o maior rio do Brasil?",
+                options: ["Rio São Francisco", "Rio Paraná", "Rio Amazonas", "Rio Tietê"],
+                correct: 2,
+                explanation: "O Rio Amazonas é o maior rio do mundo em volume de água."
+            },
+            {
+                question: "Em que ano foi proclamada a Independência do Brasil?",
+                options: ["1808", "1822", "1889", "1917"],
+                correct: 1,
+                explanation: "A Independência foi proclamada em 1822, por Dom Pedro I."
+            },
+            {
+                question: "Quantos estados tem o Brasil (incluindo o Distrito Federal)?",
+                options: ["25", "26", "27", "28"],
+                correct: 2,
+                explanation: "O Brasil tem 26 estados mais o Distrito Federal."
+            },
+            {
+                question: "Qual é a língua oficial do Brasil?",
+                options: ["Espanhol", "Francês", "Inglês", "Português"],
+                correct: 3,
+                explanation: "O português é a língua oficial do Brasil."
+            },
+            {
+                question: "Qual é a moeda oficial do Brasil?",
+                options: ["Peso", "Real", "Dólar", "Euro"],
+                correct: 1,
+                explanation: "O Real Brasileiro (R$) foi lançado em 1994."
+            },
+            {
+                question: "Qual é o maior estado brasileiro em território?",
+                options: ["Amazonas", "Bahia", "Minas Gerais", "Mato Grosso"],
+                correct: 0,
+                explanation: "O Amazonas é o maior estado brasileiro."
+            },
+            {
+                question: "Quem é considerado o 'pai da aviação' no Brasil?",
+                options: ["Alberto Santos Dumont", "Eduardo Gomes", "Neymiod", "Bartolomeu de Gusmão"],
+                correct: 0,
+                explanation: "Alberto Santos Dumont é conhecido como pai da aviação por seus feitos pioneiros."
+            },
+            {
+                question: "Qual é o famoso monumento localizado na Praça da República em Brasília?",
+                options: ["Cristo Redentor", "Obelisco Ipiranga", "Monumento Tomb of the Unknown Soldier", "Pórtico da Cidade"],
+                correct: 3,
+                explanation: "O Pórtico da Cidade de Brasília é um marco famoso na Praça da República."
+            },
+            {
+                question: "Qual clube de futebol brasileiro tem maior número de títulos brasileiros?",
+                options: ["Flamengo", "Corinthians", "São Paulo", "Palmeiras"],
+                correct: 0,
+                explanation: "O Flamengo tem 7 títulos brasileiros, o maior número entre clubes brasileiros."
+            }
+        ];
+
+        // Game state
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answers = [];
+
+        // DOM elements
+        const startScreen = document.getElementById('start-screen');
+        const questionScreen = document.getElementById('question-screen');
+        const finalScreen = document.getElementById('final-screen');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackDiv = document.getElementById('feedback');
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const questionCounter = document.getElementById('question-counter');
+        const currentScore = document.getElementById('current-score');
+        const finalScore = document.getElementById('final-score');
+        const finalMessage = document.getElementById('final-message');
+
+        // Event listeners
+        startBtn.addEventListener('click', startQuiz);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Functions
+        function startQuiz() {
+            startScreen.classList.add('hidden');
+            questionScreen.classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = quizData[currentQuestionIndex];
+            questionText.textContent = question.question;
+            questionCounter.textContent = `Pergunta ${currentQuestionIndex + 1} de ${quizData.length}`;
+            currentScore.textContent = `Pontuação: ${score}`;
+            feedbackDiv.classList.add('hidden');
+
+            optionsContainer.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('btn-option', 'bg-gray-100', 'hover:bg-gray-200', 'text-gray-800', 'w-full', 'text-left', 'p-4', 'rounded-lg', 'font-semibold');
+                button.addEventListener('click', () => checkAnswer(index));
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            const question = quizData[currentQuestionIndex];
+            const isCorrect = selectedIndex === question.correct;
+            answers.push({question: currentQuestionIndex, selected: selectedIndex, correct: question.correct, isCorrect});
+
+            if (isCorrect) {
+                score++;
+            }
+
+            // Update button styles
+            const buttons = optionsContainer.querySelectorAll('button');
+            buttons.forEach((button, index) => {
+                button.disabled = true;
+                if (index === question.correct) {
+                    button.classList.add('correct');
+                } else if (index === selectedIndex && !isCorrect) {
+                    button.classList.add('incorrect');
+                }
+            });
+
+            // Show feedback
+            feedbackDiv.innerHTML = `
+                <div class="text-center">
+                    <p class="text-lg font-semibold ${isCorrect ? 'text-green-600' : 'text-red-600'} mb-2">
+                        ${isCorrect ? '✅ Correto!' : '❌ Incorreto!'}
+                    </p>
+                    <p class="text-gray-700">${question.explanation}</p>
+                    <button id="next-btn" class="mt-4 btn-option bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold">Próxima Pergunta</button>
+                </div>
+            `;
+            feedbackDiv.classList.remove('hidden');
+
+            // Add event listener for next button
+            document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex >= quizData.length) {
+                showFinalScreen();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function showFinalScreen() {
+            questionScreen.classList.add('hidden');
+            finalScreen.classList.remove('hidden');
+            
+            finalScore.textContent = score + '/' + quizData.length;
+            
+            let message;
+            if (score <= 3) {
+                message = "Precisa melhorar! Tente novamente.";
+            } else if (score <= 6) {
+                message = "Bom trabalho, mas ainda há o que aprender.";
+            } else if (score <= 9) {
+                message = "Excelente! Você conhece bem o Brasil.";
+            } else {
+                message = "Perfeito! Você é um expert sobre o Brasil!";
+            }
+            
+            finalMessage.textContent = message;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            answers = [];
+            finalScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+        }
+
+        // Make buttons keyboard accessible
+        document.addEventListener('keydown', (e) => {
+            const options = optionsContainer.querySelectorAll('button');
+            const nextBtn = document.getElementById('next-btn');
+            
+            if (questionScreen.classList.contains('hidden')) return;
+            
+            if (e.key >= '1' && e.key <= options.length.toString()) {
+                e.preventDefault();
+                options[parseInt(e.key) - 1].click();
+            }
+            
+            if (e.key === ' ' && nextBtn && !nextBtn.disabled) {
+                e.preventDefault();
+                nextBtn.click();
+            }
+        });
+
+        // Initial focus
+        startBtn.focus();
+    </script>
+</body>
+</html>
+</content>
+</create_file>
