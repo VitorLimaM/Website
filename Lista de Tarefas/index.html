@@ -39,13 +39,13 @@
     </div>
 
     <script>
-        // Estado global (simulando state do React)
+        
         let state = {
             tasks: [],
-            filter: 'all' // 'all', 'active', 'completed'
+            filter: 'all' 
         };
 
-        // Componente "Header"
+    
         function renderHeader() {
             const header = document.querySelector('#app');
             header.innerHTML += `
@@ -70,7 +70,7 @@
             `;
         }
 
-        // Componente "Task List"
+       
         function renderTaskList() {
             const container = document.querySelector('#app');
             let html = '<div id="task-list" class="bg-white rounded-lg shadow-lg p-6">';
@@ -97,7 +97,7 @@
             container.innerHTML += html;
         }
 
-        // Componente "Stats"
+    
         function renderStats() {
             const container = document.querySelector('#app');
             const total = state.tasks.length;
@@ -125,7 +125,7 @@
             `;
         }
 
-        // Funções utilitárias (hooks simulados)
+        
         function getFilteredTasks() {
             if (state.filter === 'all') return state.tasks;
             if (state.filter === 'active') return state.tasks.filter(t => !t.completed);
@@ -140,7 +140,7 @@
                 completed: false
             };
             state.tasks.push(task);
-            renderApp(); // Re-render (simulando re-render do React)
+            renderApp(); 
         }
 
         function toggleTask(id) {
@@ -164,7 +164,7 @@
             renderApp();
         }
 
-        // Função principal de renderização (simulando render do React)
+       
         function renderApp() {
             const app = document.querySelector('#app');
             app.innerHTML = `
@@ -178,13 +178,13 @@
             renderTaskList();
             renderStats();
             
-            // Re-adicionar event listeners após re-render
+          
             attachEventListeners();
         }
 
-        // Anexar event listeners
+    
         function attachEventListeners() {
-            // Form de adicionar tarefa
+           
             document.querySelector('#add-task-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const input = document.querySelector('#task-input');
@@ -194,15 +194,14 @@
                 }
             });
             
-            // Filtros
+         
             document.querySelector('#filter-all').addEventListener('click', () => setFilter('all'));
             document.querySelector('#filter-active').addEventListener('click', () => setFilter('active'));
             document.querySelector('#filter-completed').addEventListener('click', () => setFilter('completed'));
             
-            // Limpar concluídas
             document.querySelector('#clear-completed').addEventListener('click', () => clearCompleted());
             
-            // Checkboxes de tarefas
+        
             document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
                 checkbox.addEventListener('change', (e) => {
                     const id = parseInt(e.target.id.replace('check-', ''));
@@ -210,7 +209,7 @@
                 });
             });
             
-            // Botões de deletar
+          
             document.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const id = parseInt(e.target.getAttribute('data-id'));
@@ -219,10 +218,10 @@
             });
         }
 
-        // Inicializar app
+        
         renderApp();
 
-        // Usar localStorage para persistência (hook useEffect simulado)
+       
         window.addEventListener('load', () => {
             const savedTasks = localStorage.getItem('todo-tasks');
             if (savedTasks) {
@@ -239,5 +238,6 @@
 </html>
 </content>
 </create_file>
+
 
 
