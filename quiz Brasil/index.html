@@ -52,10 +52,10 @@
             </div>
             <h3 class="text-2xl font-bold mb-6 text-gray-800" id="question-text">Pergunta?</h3>
             <div class="space-y-3" id="options-container">
-                <!-- Options will be inserted here -->
+           
             </div>
             <div id="feedback" class="hidden mt-6 p-4 rounded-lg">
-                <!-- Feedback will be inserted here -->
+          
             </div>
         </div>
 
@@ -72,7 +72,7 @@
     </footer>
 
     <script>
-        // Quiz data
+  
         const quizData = [
             {
                 question: "Qual é a capital do Brasil?",
@@ -136,12 +136,12 @@
             }
         ];
 
-        // Game state
+ 
         let currentQuestionIndex = 0;
         let score = 0;
         let answers = [];
 
-        // DOM elements
+
         const startScreen = document.getElementById('start-screen');
         const questionScreen = document.getElementById('question-screen');
         const finalScreen = document.getElementById('final-screen');
@@ -155,11 +155,10 @@
         const finalScore = document.getElementById('final-score');
         const finalMessage = document.getElementById('final-message');
 
-        // Event listeners
+
         startBtn.addEventListener('click', startQuiz);
         restartBtn.addEventListener('click', restartQuiz);
 
-        // Functions
         function startQuiz() {
             startScreen.classList.add('hidden');
             questionScreen.classList.remove('hidden');
@@ -192,7 +191,7 @@
                 score++;
             }
 
-            // Update button styles
+        
             const buttons = optionsContainer.querySelectorAll('button');
             buttons.forEach((button, index) => {
                 button.disabled = true;
@@ -203,7 +202,7 @@
                 }
             });
 
-            // Show feedback
+      
             feedbackDiv.innerHTML = `
                 <div class="text-center">
                     <p class="text-lg font-semibold ${isCorrect ? 'text-green-600' : 'text-red-600'} mb-2">
@@ -215,7 +214,7 @@
             `;
             feedbackDiv.classList.remove('hidden');
 
-            // Add event listener for next button
+     
             document.getElementById('next-btn').addEventListener('click', nextQuestion);
         }
 
@@ -257,7 +256,7 @@
             startScreen.classList.remove('hidden');
         }
 
-        // Make buttons keyboard accessible
+       
         document.addEventListener('keydown', (e) => {
             const options = optionsContainer.querySelectorAll('button');
             const nextBtn = document.getElementById('next-btn');
@@ -275,10 +274,11 @@
             }
         });
 
-        // Initial focus
+
         startBtn.focus();
     </script>
 </body>
 </html>
 </content>
+
 </create_file>
