@@ -99,7 +99,7 @@
         }
 
         async function getCoordinates(city) {
-            // Simulação simples - em produção, use uma API de geocoding
+            
             const coordinates = {
                 'vancouver': [-23.5505, -46.6333],
                 'rio de janeiro': [-22.9068, -43.1729],
@@ -120,7 +120,7 @@
             const current = data.current_weather;
             const hourly = data.hourly;
 
-            // Atualizar elementos
+       
             document.getElementById('city-name').innerText = city;
             document.getElementById('temperature').innerText = Math.round(current.temperature) + '°C';
             document.getElementById('description').innerText = getWeatherDescription(current.weathercode);
@@ -129,12 +129,12 @@
             document.getElementById('wind-speed').innerText = Math.round(hourly.wind_speed_10m[0]) + ' km/h';
             document.getElementById('visibility').innerText = Math.round(hourly.visibility[0] / 1000) + ' km';
 
-            // Previsão simplificada
+    
             document.getElementById('morning-temp').innerText = Math.round(hourly.temperature_2m[6]) + '°C'; // 6 AM
             document.getElementById('afternoon-temp').innerText = Math.round(hourly.temperature_2m[12]) + '°C'; // 12 PM
             document.getElementById('evening-temp').innerText = Math.round(hourly.temperature_2m[18]) + '°C'; // 6 PM
 
-            // Ícone (usando codes WMO)
+        
             document.getElementById('weather-icon').src = getWeatherIcon(current.weathercode);
         }
 
@@ -150,8 +150,8 @@
         }
 
         function getWeatherIcon(code) {
-            // Retorna ícone baseado no código WMO
-            return `https://openweathermap.org/img/w/${code}.png`; // Usando OpenWeather icons por simplicidade
+            
+            return `https://openweathermap.org/img/w/${code}.png`; 
         }
 
         document.getElementById('search-btn').addEventListener('click', async () => {
@@ -177,7 +177,7 @@
             }
         });
 
-        // Load default city 
+     
         window.addEventListener('load', () => {
             displayWeather('vancouver').then(() => {
                 document.getElementById('weather-display').classList.remove('hidden');
@@ -188,4 +188,5 @@
 </html>
 </content>
 </create_file>
+
 
