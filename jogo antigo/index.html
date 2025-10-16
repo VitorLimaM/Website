@@ -86,33 +86,33 @@
         const pauseBtn = document.getElementById('pause-btn');
         const resetBtn = document.getElementById('reset-btn');
 
-        // Paddle dimensions
+    
         const paddleWidth = 10;
         const paddleHeight = 100;
 
-        // Ball dimensions
+      
         const ballRadius = 8;
 
-        // Game state
+      
         let gameRunning = false;
         let paused = false;
         let score1 = 0;
         let score2 = 0;
 
-        // Paddle positions
+    
         let leftPaddleY = canvas.height / 2 - paddleHeight / 2;
         let rightPaddleY = canvas.height / 2 - paddleHeight / 2;
 
-        // Ball position and velocity
+   
         let ballX = canvas.width / 2;
         let ballY = canvas.height / 2;
         let ballSpeedX = 4;
         let ballSpeedY = 3;
 
-        // Key presses
+      
         const keys = {};
 
-        // Event listeners
+     
         document.addEventListener('keydown', (e) => {
             keys[e.key] = true;
         });
@@ -125,7 +125,7 @@
         pauseBtn.addEventListener('click', togglePause);
         resetBtn.addEventListener('click', resetGame);
 
-        // Mobile controls
+ 
         document.getElementById('left-up').addEventListener('touchstart', () => keys['w'] = true);
         document.getElementById('left-up').addEventListener('touchend', () => keys['w'] = false);
         document.getElementById('left-down').addEventListener('touchstart', () => keys['s'] = true);
@@ -138,7 +138,7 @@
         function update() {
             if (!gameRunning || paused) return;
 
-            // Move paddles
+     
             if ((keys['w'] || keys['W']) && leftPaddleY > 0) {
                 leftPaddleY -= 7;
             }
@@ -152,23 +152,22 @@
                 rightPaddleY += 7;
             }
 
-            // Move ball
+     
             ballX += ballSpeedX;
             ballY += ballSpeedY;
 
-            // Ball collision with top/bottom
             if (ballY - ballRadius <= 0 || ballY + ballRadius >= canvas.height) {
                 ballSpeedY = -ballSpeedY;
             }
 
-            // Ball collision with paddles
+          
             if (ballX <= paddleWidth + ballRadius && ballY >= leftPaddleY && ballY <= leftPaddleY + paddleHeight) {
                 ballSpeedX = -ballSpeedX;
             } else if (ballX >= canvas.width - paddleWidth - ballRadius && ballY >= rightPaddleY && ballY <= rightPaddleY + paddleHeight) {
                 ballSpeedX = -ballSpeedX;
             }
 
-            // Score if ball goes off screen
+            
             if (ballX <= 0) {
                 score2++;
                 resetBall();
@@ -177,7 +176,7 @@
                 resetBall();
             }
 
-            // Check for winner
+            
             if (score1 >= 5 || score2 >= 5) {
                 alert((score1 >= 5 ? 'Jogador 1' : 'Jogador 2') + ' venceu!');
                 gameRunning = false;
@@ -193,11 +192,11 @@
         }
 
         function draw() {
-            // Clear canvas
+          
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Draw center line
+           
             ctx.strokeStyle = '#fff';
             ctx.setLineDash([5, 15]);
             ctx.beginPath();
@@ -205,19 +204,19 @@
             ctx.lineTo(canvas.width / 2, canvas.height);
             ctx.stroke();
 
-            // Draw paddles
+       
             ctx.fillStyle = '#0ff';
             ctx.fillRect(0, leftPaddleY, paddleWidth, paddleHeight);
             ctx.fillStyle = '#f00';
             ctx.fillRect(canvas.width - paddleWidth, rightPaddleY, paddleWidth, paddleHeight);
 
-            // Draw ball
+       
             ctx.fillStyle = '#fff';
             ctx.beginPath();
             ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
             ctx.fill();
 
-            // Draw score
+      
             ctx.fillStyle = '#fff';
             ctx.font = '24px Arial';
             ctx.textAlign = 'center';
@@ -259,7 +258,7 @@
             pauseBtn.style.display = 'none';
         }
 
-        // Make canvas responsive
+      
         function resizeCanvas() {
             const maxWidth = 800;
             const maxHeight = 400;
@@ -271,10 +270,11 @@
 window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // Start the game loop
+        
         gameLoop();
     </script>
 </body>
 </html>
 </content>
 </create_file>
+
