@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anvilari</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f9fafb;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      color: #30554c; 
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #30554c; 
+    }
+
+ 
+    header {
+      background-color: #30554c; 
+      color: white;
+      padding: 15px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+    .logo h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+    nav ul li {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    nav ul li a {
+      color: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      background-color: #30554c; 
+      color: #fce4ec; 
+    }
+
+
+    main {
+      flex-grow: 1;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .intro {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .intro h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      color: #30554c; 
+      margin-bottom: 10px;
+    }
+    .intro p {
+      font-size: 1.1rem;
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+  
+    .produtos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .produto-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .produto-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+    .produto-img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      background-color: #f0f0f0;
+      padding: 20px;
+    }
+    .produto-info {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .produto-info h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      color: #30554c; 
+      margin-bottom: 10px;
+    }
+    .produto-info p {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #30554c; ; 
+      margin-bottom: 15px;
+    }
+    .btn-comprar {
+      background-color: #30554c; 
+      color: white;
+      border: none;
+      padding: 12px 0;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-align: center;
+      user-select: none;
+    }
+    .btn-comprar:hover {
+      background-color: #30554c; 
+    }
+
+
+    footer {
+      background-color: #30554c; 
+      color: #f8bbd0; 
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 60px;
+    }
+    footer .social-icons {
+      margin: 15px 0 10px;
+    }
+    footer .social-icons a {
+      color: #f48fb1;
+      margin: 0 12px;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    footer .social-icons a:hover {
+      color: #fce4ec; 
+    }
+
+   
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px 20px;
+      }
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+      .produto-img {
+        height: 180px;
+      }
+    }
+
+    
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="C:\Users\vitor\OneDrive\Área de Trabalho\Anvilare\logo.jpeg" alt="Logo Anvilari" />
+      <h1>Anvilari</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" class="active">Início</a></li>
+        <li><a href="#produtos">Produtos</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h2>Seu parceiro em embalagem plastica</h2>
+      <p>Fabricamos os melhores produtos para sua casa ou comercio, preço justo e atendimento especializado.</p>
+    </section>
+
+    <section id="produtos" class="produtos-grid">
+      <article class="produto-card">
+        <img class="produto-img" src="C:\Users\vitor\OneDrive\Área de Trabalho\Anvilare\sacola.jpg" alt="Sacola plastica" />
+        <div class="produto-info">
+          <h3>Sacola plastica</h3>
+          <p>R$ 12,00/kg</p>
+          <a href="sizecolor1.html">
+          <button class="btn-comprar" aria-label="Socala plastica">Comprar</button>
+          </a>
+        </div>
+      </article>
+
+      <article class="produto-card">
+        <img class="produto-img" src="C:\Users\vitor\OneDrive\Área de Trabalho\Anvilare\lixo.jpg" alt="Saco de lixo" />
+        <div class="produto-info">
+          <h3>Saco de lixo</h3>
+          <p>R$ 9,50/kg</p>
+          <a href="sizecolor2.html">
+          <button class="btn-comprar" aria-label="Saco de lixo">Comprar</button>
+          </a>
+        </div>
+      </article>
+       
+    </section>
+  </main>
+
+  <footer id="contato">
+    <p>Contato: <a href="tel:+5517991083842">(17) 99108-3842</a> | Endereço: Avenida Estados Unidos numero:1730, distrito industrial</p>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/anvilariplastic" target="_blank" aria-label="Instagram Anvilari"><i class="fab fa-instagram"></i></a>
+      <a href="https://wa.me/5517991083842" target="_blank" aria-label="WhatsApp Anvilari"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    <p>© 2024 Anvilari. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>

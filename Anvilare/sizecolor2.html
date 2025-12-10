@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Saco de Lixo - Anvilari</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f9fafb;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      max-width: 600px;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      color: #30554c;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .produto-img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      background-color: #f0f0f0;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .btn-checkout {
+      background-color: #30554c;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    .btn-checkout:hover {
+      background-color: #30554c;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Saco de Lixo</h1>
+    <img class="produto-img" src="C:\Users\vitor\OneDrive\Área de Trabalho\Anvilare\lixo.jpg" alt="Saco de lixo" />
+    <label for="tamanho">Escolha o tamanho:</label>
+    <select id="tamanho">
+      <option value="10l">10L</option>
+      <option value="20l">20L</option>
+      <option value="50l">50L</option>
+    </select>
+    <label for="cor">Escolha a cor:</label>
+    <select id="cor">
+      <option value="preto">Preto</option>
+      <option value="verde">Verde</option>
+      <option value="branco">Branco</option>
+    </select>
+    <label for="quantidade">Quantidade (kg):</label>
+    <input 
+      type="number" 
+      id="quantidade" 
+      min="1" 
+      step="0.1" 
+      placeholder="Ex: 2.5"
+    />
+    <button class="btn-checkout" onclick="window.open('checkout.html', '_blank')">Finalizar Compra</button>
+  </div>
+</body>
+</html>
